@@ -37,6 +37,16 @@ weatherApp.service('weatherService',['$resource', function($resource){
 
 }]);
 
+weatherApp.filter('startFrom', function() {
+  return function(input, start) {
+    if(input) {
+      start = +start; //parse to int
+      return input.slice(start);
+    }
+    return [];
+  }
+});
+
 // CONTROLLERS
 weatherApp.controller('homeController', ['$scope', '$location', 'cityService', function($scope, $location, cityService){
   
@@ -70,6 +80,12 @@ weatherApp.controller('forecastController', ['$scope', '$routeParams', 'cityServ
 
   $scope.convertToDate = function(dt){
   	return new Date(dt * 1000);
+  }
+
+  $scope.currentPage = 0;
+  $scope.pageSize = 2;
+  $scope.numberOfPages=function(){
+    return Math.ceil($scope.days/$scope.pageSize);                
   }
 
 }]);

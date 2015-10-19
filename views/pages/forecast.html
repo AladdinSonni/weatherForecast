@@ -1,19 +1,26 @@
 <p>
-  <a href="#/">Back to Search</a>
+  <a class="btn btn-success" href="#/">Back to Search</a>
 </p>
-
+<hr />
 Forecast for {{ city }}
 <hr />
-Days: <a href="#/forecast/2" ng-class="{ 'bg-primary': days === '2' }">2</a> | 
-      <a href="#/forecast/5" ng-class="{ 'bg-primary': days === '5' }">5</a> | 
-      <a href="#/forecast/7" ng-class="{ 'bg-primary': days === '7' }">7</a>
+Forecast days: (Min) <a href="#/forecast/2" ng-class="{ 'bg-primary': days === '2' }">2</a> | 
+      <a href="#/forecast/4" ng-class="{ 'bg-primary': days === '4' }">4</a> | 
+      <a href="#/forecast/6" ng-class="{ 'bg-primary': days === '6' }">6</a> |
+      <a href="#/forecast/8" ng-class="{ 'bg-primary': days === '8' }">8</a> |
+      <a href="#/forecast/10" ng-class="{ 'bg-primary': days === '10' }">10</a> |
+      <a href="#/forecast/12" ng-class="{ 'bg-primary': days === '12' }">12</a> |
+      <a href="#/forecast/14" ng-class="{ 'bg-primary': days === '14' }">14</a> |
+      <a href="#/forecast/16" ng-class="{ 'bg-primary': days === '16' }">16</a> (Max)
 <hr />
-<div ng-repeat="w in weatherResult.list">
+<div ng-repeat="w in weatherResult.list | startFrom: currentPage*pageSize | limitTo: pageSize">
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ convertToDate(w.dt) | date:'y-M-d' }}</h3>
+          <h3 class="panel-title">
+            {{ convertToDate(w.dt) | date:'y-M-d' }} <span class="pull-right">Forecast day {{ $index + 1}}</span>
+          </h3>
         </div>
         <div class="panel-body">
           Daytime temperature: {{ convertToCelsius(w.temp.day) + " C° " +  convertToFahrenheit(w.temp.day) + " F°"}}
@@ -22,3 +29,13 @@ Days: <a href="#/forecast/2" ng-class="{ 'bg-primary': days === '2' }">2</a> |
     </div>
   </div>
 </div>
+<nav>
+  <ul class="pager">
+    <li><button class="btn btn-default" type="button" style="border-radius: 15px;" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button></li>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <li><button class="btn btn-default" type="button" style="border-radius: 15px;" ng-disabled="currentPage >= weatherResult.list.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next</button></li>
+  </ul>
+</nav>
+<!-- <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1"> Previous </button>
+{{currentPage+1}}/{{numberOfPages()}}
+<button ng-disabled="currentPage >= weatherResult.list.length/pageSize - 1" ng-click="currentPage=currentPage+1"> Next </button> -->
