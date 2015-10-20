@@ -4,15 +4,15 @@ var weatherApp = angular.module('weatherApp', ['ngRoute','ngResource']);
 weatherApp.config(function($routeProvider) {
   $routeProvider
   .when('/', {
-    templateUrl: 'pages/home.html',
+    templateUrl: 'home.htm',
     controller: 'homeController'
   })
   .when('/forecast', {
-    templateUrl: 'pages/forecast.html',
+    templateUrl: 'forecast.htm',
     controller: 'forecastController'
   })
   .when('/forecast/:days', {
-    templateUrl: 'pages/forecast.html',
+    templateUrl: 'forecast.htm',
     controller: 'forecastController'
   })
 });
@@ -70,6 +70,8 @@ weatherApp.controller('forecastController', ['$scope', '$routeParams', 'cityServ
 
   $scope.weatherResult = weatherService.GetWeather($scope.city, $scope.days);
 
+  $scope.a = $scope.weatherResult;
+  
   $scope.convertToFahrenheit = function(degK){
   	return Math.round((1.8 * (degK - 273)) + 32);
   }

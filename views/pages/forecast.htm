@@ -1,6 +1,4 @@
-<p>
-  <a class="btn btn-success" href="#/">Back to Search</a>
-</p>
+<a class="btn btn-success" href="#/">Back to Search</a>
 <hr />
 Forecast for {{ city }}
 <hr />
@@ -19,11 +17,17 @@ Forecast days: (Min) <a href="#/forecast/2" ng-class="{ 'bg-primary': days === '
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ convertToDate(w.dt) | date:'y-M-d' }} <span class="pull-right">Forecast day {{ $index + 1}}</span>
+            {{ convertToDate(w.dt) | date:'y-M-d' }}
           </h3>
         </div>
         <div class="panel-body">
-          Daytime temperature: {{ convertToCelsius(w.temp.day) + " C° " +  convertToFahrenheit(w.temp.day) + " F°"}}
+          Daytime temperature: {{"Day: " + convertToCelsius(w.temp.day) + " C° " +  convertToFahrenheit(w.temp.day) + " F°"}}
+          {{" - Minimum: " + convertToCelsius(w.temp.min) + " C° " +  convertToFahrenheit(w.temp.min) + " F°"}}
+          {{" - Maximum: " + convertToCelsius(w.temp.max) + " C° " +  convertToFahrenheit(w.temp.max) + " F°"}}
+          {{" - Night: " + convertToCelsius(w.temp.night) + " C° " +  convertToFahrenheit(w.temp.night) + " F°"}}
+          {{" - Humidity: " + w.humidity + "%"}}
+          {{" - Weather: " +w.weather[0].main}}{{" ("+w.weather[0].description+")"}}
+          <!-- {{weatherResult.list}} -->
         </div>
       </div>
     </div>
